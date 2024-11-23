@@ -10,7 +10,7 @@ For infrastructure platform, I choose AWS as it has more regions and availabilit
 I choose Kubernetes(EKS) for container orchestration.
 ### Components of orchestration
 - EKS with EC2 instances for the cluster.
-- I choose Karpenter for autoscaling of the cluster. It is efficent in scaling according to the needs of the workloads. It helps in reducing costs.
+- I choose Karpenter for autoscaling the cluster. It is efficient in scaling according to the needs of the workloads. It helps in reducing costs.
 
 - For PostgreSQL database, I choose CloudNativePG operator to manage the PostgreSQL database within the cluster. When compared to the managed service like RDS, cost savings would be huge.
 
