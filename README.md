@@ -6,7 +6,7 @@ For infrastructure platform, I choose AWS as it has more regions and availabilit
 
 ## Orchestration Technology
 I choose Kubernetes(EKS) for container orchestration.
-# Components of orchestration
+### Components of orchestration
 - EKS with EC2 instances for the cluster.
 - I choose Karpenter for autoscaling of the cluster. It is efficent in scaling according to the needs of the workloads. It helps in reducing costs.
 
@@ -100,7 +100,7 @@ For automating microservices deployment, I choose Github Actions and Argo CD. CI
 
 I would use multistage builds with security best practices such as using distroless images where it is appropriate for building the container images.
 
-Given below is a snippet of a Dockerfile for a GO app.
+**Given below is a snippet of a Dockerfile for a GO app.**
 ```
 # Stage 1: Build
 FROM golang:1.20 as builder
@@ -120,7 +120,7 @@ ENTRYPOINT ["/main"]
 ```
 For CI pipeline, I would integrate security testing tools for SAST and DAST like SonarQube, trivy for image scanning etc.
 
-Given below is a snippet of a GitHub Actions workflow.
+**Given below is a snippet of a GitHub Actions workflow.**
 ```
 name: CI Pipeline
 
@@ -163,7 +163,6 @@ jobs:
 ```
 ## Release Lifecycle
 The release lifecycle would include the following.
-
 - Development:
   - Feature branches
   - Local testing
@@ -188,12 +187,12 @@ The release lifecycle would include the following.
 ## Testing Approach
 - Infrastructure Testing:
   - Validate Terraform configurations using Terratest
-
 - Microservices Testing:
   - Using SonarQube to test for bugs/vulnerabilities
   - Unit Tests
   - Using Trivy to scan container images
   - Integration Tests
+
 ## Observability Strategy
 Opting for open source tools here would greatly reduce our costs compared to offerings like Cloudwatch or Datadog.
 
