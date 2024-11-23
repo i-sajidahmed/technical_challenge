@@ -95,6 +95,37 @@ resource "aws_eks_node_group" "main" {
 }
 
 ```
+
+**Given below is the snippet for istio virtual service for canary deployment.**
+```
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: app-vs
+spec:
+  hosts:
+  - app.myapp.com
+  gateways:
+  - app-gateway
+  http:
+  - match:
+    - headers:
+        x-canary:
+          exact: "true"
+    route:
+    - destination:
+        host: app-canary
+        subset: v2
+        port:
+          number: 80
+      weight: 20
+    - destination:
+        host: app-stable
+        subset: v1
+        port:
+          number: 80
+      weight: 80
+```
 ## Microservices Deployment
 For automating microservices deployment, I choose Github Actions and Argo CD. CI using Github Actions and Argo CD with GitOps approach for Continous Deployment
 
