@@ -161,6 +161,59 @@ jobs:
           docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend:latest .
           docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend:latest
 ```
+## Release Lifecycle
+The release lifecycle would include the following.
 
+- Development:
+  - Feature branches
+  - Local testing
+  - PR 
+- CI Pipeline:
+  - Code validation
+  - Unit tests
+  - Integration tests
+  - Container image build
+  - Security scanning
+  - Container image pushed to AWS ECR
+- CD Pipeline
+  - ArgoCD environment promotion
+  - Staging deployment
+  - Integration testing
+  - Production deployment
+- Post-deployment
+  - Health checks
+  - Canary deployment using Istio
+  - Full rollout after monitoring
 
+## Testing Approach
+- Infrastructure Testing:
+  - Validate Terraform configurations using Terratest
 
+- Microservices Testing:
+  - Using SonarQube to test for bugs/vulnerabilities
+  - Unit Tests
+  - Using Trivy to scan container images
+  - Integration Tests
+## Observability Strategy
+Opting for open source tools here would greatly reduce our costs compared to offerings like Cloudwatch or Datadog.
+
+For observability, I choose Prometheus to scrape metrics from the cluster and microservices, Grafana for dashboarding and ELK stack for aggregating logs and analyzing them. 
+
+### Monitoring Areas
+- Infrastructure Metrics
+  - Node CPU/Memory utilization
+  - Network 
+  - Disk usage
+
+- Application Metrics
+
+  - Request latency
+  - Error rates
+  - Transaction throughput
+  - Custom metrics
+
+- Logs
+  - Application logs
+  - System logs
+  - Audit logs
+  - Security logs
