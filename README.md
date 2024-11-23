@@ -12,7 +12,7 @@ I choose Kubernetes(EKS) for container orchestration.
 - EKS with EC2 instances for the cluster.
 - I choose Karpenter for autoscaling the cluster. It is efficient in scaling according to the needs of the workloads. It helps in reducing costs.
 
-- For PostgreSQL database, I choose CloudNativePG operator to manage the PostgreSQL database within the cluster. When compared to the managed service like RDS, cost savings would be huge.
+- For PostgreSQL database, I choose CloudNativePG operator to manage the PostgreSQL database within the cluster. When compared to the managed service like RDS, the cost savings would be huge.
 
 - Istio for handling service mesh, canary deployments and routing traffic. Istio helps in securing the traffic between the services with mTLS and also helps in observability. Canary deployments can be implemented effectively using istio.
 
@@ -24,7 +24,7 @@ I choose Kubernetes(EKS) for container orchestration.
 
 
 ## Infrastructure Automation
-I choose Terraform for automating infrastructure deployment. Using Terraform, we can create modular code for reusability. It has declarative approach is efficient in creating and managing the resources.
+I choose Terraform for automating infrastructure deployment. Using Terraform, we can create modular code for reusability. It has declarative approach and it is efficient in creating and managing the resources.
 
 ### Given below is the snippets of terraform for vpc
 ```
@@ -131,7 +131,8 @@ spec:
 ## Microservices Deployment
 For automating microservices deployment, I choose Github Actions and Argo CD. CI using Github Actions and Argo CD with GitOps approach for Continous Deployment
 
-I would use multistage builds with security best practices such as using distroless images where it is appropriate for building the container images.
+For building container images, I would use multistage builds with security best practices 
+such as using distroless images and non-root users.
 
 **Given below is a snippet of a Dockerfile for a GO app.**
 ```
@@ -227,7 +228,7 @@ The release lifecycle would include the following.
   - Integration Tests
 
 ## Observability Strategy
-Opting for open source tools here would greatly reduce our costs compared to offerings like Cloudwatch or Datadog.
+Here, opting for open source tools here would greatly reduce our costs compared to offerings like Cloudwatch or Datadog.
 
 For observability, I choose Prometheus to scrape metrics from the cluster and microservices, Grafana for dashboarding and ELK stack for aggregating logs and analyzing them. 
 
