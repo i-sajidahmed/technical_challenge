@@ -1,7 +1,7 @@
 # DevOps Technical Challenge
 Requirements of project is to support microservices architecture consisting of frontend, backend and PostgreSQL database.
 
-***I have chosen the tools/services with balance between ease of operations, maintenance and costs associated with the tools and services. I have opted for mostly for open source tools to reduce the costs and dependency on vendors.***
+***I have chosen the tools/services with balance between ease of operations, maintenance and costs associated with the tools and services. I have opted mostly for open source tools to reduce the costs and dependency on vendors.***
 
 ## Infrastructure Platform
 For infrastructure platform, I choose AWS as it has more regions and availability zones and it provides numerous services and intuitive UI when compared with other cloud providers.
