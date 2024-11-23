@@ -95,9 +95,72 @@ resource "aws_eks_node_group" "main" {
 }
 
 ```
-
 ## Microservices Deployment
-For automating microservices deployment, I choose Github Actions and Argo CD.
+For automating microservices deployment, I choose Github Actions and Argo CD. CI using Github Actions and Argo CD with GitOps approach for Continous Deployment
+
+I would use multistage builds with security best practices such as using distroless images where it is appropriate for building the container images.
+
+Given below is a snippet of a Dockerfile for a GO app.
+```
+# Stage 1: Build
+FROM golang:1.20 as builder
+WORKDIR /app
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+COPY . ./
+RUN go build -o main .
+
+# Stage 2: Production
+FROM gcr.io/distroless/static:nonroot
+WORKDIR /
+COPY --from=builder /app/main .
+USER nonroot:nonroot
+ENTRYPOINT ["/main"]
+```
+For CI pipeline, I would integrate security testing tools for SAST and DAST like SonarQube, trivy for image scanning etc.
+
+Given below is a snippet of a GitHub Actions workflow.
+```
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scan-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy Image Scan
+        uses: aquasecurity/trivy-action@v0.11.0
+        with:
+          image-ref: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=my-project-key
+            -Dsonar.organization=my-org
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Amazon ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend:latest .
+          docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+```
 
 
 
